@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+span.title01 {
+	
+	font-size : 60px;
+	color : #000000;
+	font-family: Arial;
+	font-weight : normal;
+}
+
+span.title02 {
+	
+	font-size : 20px;
+	color : #c0c0c0;
+	font-family: Arial;
+	font-weight : normal;
+}
+
+span.s-text01 {
+	
+	font-size : 60px;
+	color : #FFFFFF;
+	font-family: Arial;
+	font-weight : bold;
+	
+}
+
+span.s-text02 {
+	
+	font-size : 40px;
+	color : #404040;
+	font-family: Arial;
+	font-weight : bold;
+	
+}
+
+.hidden {
+
+    display:none;
+
+}
+

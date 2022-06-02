@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+	<!-- MEMBER -->
+	<mapper namespace="com.jsh.myproject.dao.Dao">
+	
+	
+	<insert id="joinDao">
+		INSERT INTO member (id, pw, name, birth, gender, phone, depart, degree) VALUES (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, '학생')
+	</insert>
+
+   <!-- info에 아이디 값을 저장  -->
+	<insert id="joinDao2">
+		INSERT INTO info ( id , professor ) VALUES(#{param1} ,'장상현')
+	</insert>
+
+	
+	<select id="loginOkDao" resultType="com.jsh.myproject.dto.memberDto">
+		SELECT * FROM member WHERE id = #{param1} AND degree ='학생'
+	</select>
+	
+	<select id="checkIdDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE id = #{param1}
+	</select>
+	
+	<select id="checkIdDao2" resultType="int">
+		SELECT COUNT(*) FROM info WHERE id = #{param1}
+	</select>
+	
+	
+	<select id="checkPwDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE id = #{param1} AND pw = #{param2} AND degree ='학생'
+	</select>
+	
+	
+	<select id="searchIdOkDao" resultType="com.jsh.myproject.dto.memberDto">
+		SELECT * FROM member WHERE name = #{param1} AND phone = #{param2} AND degree ='학생'
+	</select>
+	
+	<select id="searchPwOkDao" resultType="com.jsh.myproject.dto.memberDto">
+		SELECT * FROM member WHERE id = #{param1} AND phone = #{param2} AND degree = '학생'
+	</select>
+	
+	<select id="searchIdDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE name = #{param1} AND phone = #{param2} AND degree ='학생'
+	</select>
+	
+	<select id="searchPwDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE id = #{param1} AND phone = #{param2} AND degree = '학생'
+	</select>
+	
+	
+	<!-- INFO -->
+	<select id="infoDao" resultType="com.jsh.myproject.dto.infoDto">
+		SELECT * FROM info WHERE id = #{param1}
+	</select>
+	
+	<update id="infoOkDao">
+		UPDATE info SET china = #{param1} ,english = #{param2}, home = #{param3} , email = #{param4} , bank = #{param5} , account = #{param6} , depositor = #{param7} , nation = #{param8} WHERE id = #{param9} 
+	</update>
+	
+
+	<select id="selectDao" resultType="com.jsh.myproject.dto.selectDto">
+		SELECT * FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기'
+	</select>
+
+	<select id="sumscoreDao" resultType="int">
+		SELECT sum(score) as sum FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기'
+	</select>
+
+	<select id="classDao2" resultType="com.jsh.myproject.dto.classDto">
+		SELECT * FROM class WHERE code NOT IN (SELECT code FROM selectclass where id = #{param1} and year = 2022 and semester = '1학기') and  classline = #{param2} and num =#{param3} and classification = #{param4} and year = 2022 and semester = '1학기'
+	</select>
+
+	
+
+
+
+
+
+	<select id="applicationDao">
+		INSERT INTO selectclass (id, num, classline , code, classname, score, professor, pid, year, semester, classification)
+		SELECT #{param1} , class.num, class.classline, class.code, class.classname, class.score, class.professor, class.pid, class.year, class.semester, class.classification
+		FROM CLASS
+		where CLASS.code = #{param2}
+	
+	</select>
+	
+	<update id="applicationDao2">
+		UPDATE class SET appnum = appnum+1 WHERE code = #{param1}
+	</update>
+
+
+	<delete id="applicationCancleDao">
+		DELETE FROM selectclass where id =#{param1} AND code =#{param2}
+	</delete>
+
+	<update id="applicationCancleDao2">
+		UPDATE class SET appnum = appnum-1 WHERE code =#{param1}
+	</update>
+	
+	<delete id="applicationCancleDao3">
+		DELETE FROM score where id =#{param1} AND code =#{param2} AND year = 2022 AND semester='1학기'
+	</delete>
+	
+	
+	<select id="scoreDao" resultType="com.jsh.myproject.dto.myscoreDto">
+		SELECT DISTINCT S.year, S.semester, sum(SC.score) as appscore ,  sum(S.score) as sumscore , sum(S.grade) as sumgrade , avg (S.score) as avgscore , avg(S.grade) as avggrade  from score S right join selectclass SC on S.id = SC.id and S.year = SC.year and SC.semester = SC.semester and SC.code = S.code where SC.id = #{param1} group by S.year, S.semester order by S.year desc
+	</select>
+
+	<select id="scoreDao2" resultType="com.jsh.myproject.dto.myscoreDto">
+		SELECT sum(score) as getscore FROM selectclass where code in (select code from score where grade not in 0 ) and id = #{param1} group by year, semester order by year desc
+	</select>
+
+	<select id="scoreDao3" resultType="com.jsh.myproject.dto.myscoreDto">
+		SELECT sum(score) as appscore FROM selectclass where code in (select code from score where grade is not null) and id = #{param1} group by year, semester order by year desc
+	</select>
+
+
+
+
+	<select id="scoreinfoDao" resultType="com.jsh.myproject.dto.scoreDto">
+		SELECT * FROM score WHERE id =#{param1} AND year =#{param2} AND semester=#{param3}
+	</select>
+
+
+<!-- 교수  -->
+
+
+
+	<select id="loginPOkDao" resultType="com.jsh.myproject.dto.memberDto">
+		SELECT * FROM member WHERE id = #{param1} AND degree ='교수'
+	</select>
+	
+	<select id="checkPIdDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE id = #{param1} AND degree ='교수'
+	</select>
+	
+	<select id="checkPPwDao" resultType="int">
+		SELECT COUNT(*) FROM member WHERE id = #{param1} AND pw = #{param2} AND degree ='교수'
+	</select>
+	
+
+
+	<select id="lessonDao" resultType="com.jsh.myproject.dto.classDto">
+		SELECT * FROM class WHERE pid = #{param1}
+	</select>
+
+	
+	<select id="selectclassDao" resultType="com.jsh.myproject.dto.infoDto">
+		select * from info where id in (select id from selectclass where code = #{param1})
+	</select>
+	
+	<select id="selectclassDao2" resultType="com.jsh.myproject.dto.memberDto">
+		select * from member where id in (select id from selectclass where code = #{param1})
+	</select>
+	
+	
+	<select id="checkscoreDao" resultType="int">
+		SELECT COUNT(*) FROM score WHERE id = #{param1} AND code =#{param2}
+	</select>
+	
+	<select id="getscoreDao" resultType="com.jsh.myproject.dto.scoreDto">
+		SELECT * FROM score WHERE id = #{param1} AND code =#{param2}
+	</select>
+	
+	<insert id="setscoreOkDao">
+		INSERT INTO score ( classname , score, grade, year , semester , code , id ,professor) VALUES(#{param1} ,#{param2},#{param3},#{param4},#{param5},#{param6},#{param7},#{param8})
+	</insert>
+	
+	
+	<update id="updatescoreOkDao">
+		UPDATE score SET score = #{param1}, grade = #{param2} , professor=#{param5} WHERE id=#{param3} AND code=#{param4}
+	</update>
+	
+	<select id="classDao" resultType="com.jsh.myproject.dto.classDto">
+		SELECT * FROM class WHERE code = #{param1}
+	</select>
+	
+
+
+</mapper>
