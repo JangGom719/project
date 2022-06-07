@@ -289,7 +289,6 @@ public class HomeController {
 		
 		model.addAttribute("score" , dao.scoreDao((String)session.getAttribute("id")));
 		model.addAttribute("score2", dao.scoreDao2((String)session.getAttribute("id")));
-		model.addAttribute("score3", dao.scoreDao3((String)session.getAttribute("id")));
 		
 		return "score";
 	}
@@ -327,10 +326,19 @@ public class HomeController {
 		}
 		
 		
-		int sum =  dao.sumscoreDao((String)session.getAttribute("id"));
+		
+		
+		if(dao.sumscoreDao((String)session.getAttribute("id"))!=null) {
+			
+			int sum =  dao.sumscoreDao((String)session.getAttribute("id"));
+			model.addAttribute("sum", sum);
+			
+		}  else {
+			model.addAttribute("sum", 0);
+		}
 		
 		model.addAttribute("selectclass", dao.selectDao((String)session.getAttribute("id")));
-		model.addAttribute("sum", sum);
+		
 		
 		
 		return "array";
@@ -525,7 +533,7 @@ public class HomeController {
 		
 		HttpSession session = request.getSession();	
 		
-		dao.setscoreOkDao(request.getParameter("classname"),Integer.parseInt(request.getParameter("score")) , Double.parseDouble(request.getParameter("grade")), Integer.parseInt(request.getParameter("year")), request.getParameter("semester"), request.getParameter("code"), request.getParameter("studentid"), (String)session.getAttribute("name"));
+		dao.setscoreOkDao(request.getParameter("classname"),Integer.parseInt(request.getParameter("score")) , Double.parseDouble(request.getParameter("grade")), Integer.parseInt(request.getParameter("year")), request.getParameter("semester"), request.getParameter("code"), request.getParameter("studentid"), (String)session.getAttribute("name"), (String)session.getAttribute("id"),Integer.parseInt(request.getParameter("appscore")));
 		
 	
 		return "setscoreOk";

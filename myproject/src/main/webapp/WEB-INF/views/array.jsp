@@ -183,7 +183,8 @@
 							 
 							 <td colspan="7" class="td-type05"><h3><span style="display: inline-block; width:77%; text-align: left;">나의수강목록</span><span style="display: inline-block; text-align: right;">최대학점 : 21</span>
 							 
-							 <span style="display: inline-block; text-align: right;" >신청 학점 : <% out.print(Integer.parseInt(request.getAttribute("sum").toString())); %></span>
+							 <span style="display: inline-block; text-align: right;" >신청 학점 : <%if(request.getAttribute("sum")!=null) { out.print(Integer.parseInt(request.getAttribute("sum").toString())); }
+							 else {out.print("0");}%></span>
 							 </h3></td>
 							 
 							 </tr>

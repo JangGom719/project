@@ -50,7 +50,7 @@ public interface Dao {
 	public ArrayList<selectDto> selectDao(String id);
 	//신청한 수강 리스트
 	
-	public int sumscoreDao(String id);
+	public Integer sumscoreDao(String id);
 	//신청 수강 학점
 	
 	public ArrayList<classDto> classDao2(String id, String classline, int num, String classification);
@@ -96,7 +96,7 @@ public interface Dao {
 	
 	
 	
-	public void setscoreOkDao(String classname, int score, double grade , int year , String semester, String code , String id, String professor);
+	public void setscoreOkDao(String classname, int score, double grade , int year , String semester, String code , String id, String professor , String pid , int appscore);
 	//성적 입력
 	
 	public classDto classDao(String code);

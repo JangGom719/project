@@ -73,6 +73,11 @@
 									<td><input id="input01" type="hidden" name="studentid" value="<%{out.print(request.getParameter("studentid"));}%>"></td>
 								</tr>
 								
+								<tr>
+									<td class="hidden">신청학점</td>
+									<td><input id="input01" type="hidden" name="appscore" value="${dto.score }"></td>
+								</tr>
+								
 								
 								<tr>
 									<td colspan="3" rowspan="3">

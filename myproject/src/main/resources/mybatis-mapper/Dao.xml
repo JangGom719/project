@@ -65,12 +65,15 @@
 	
 
 	<select id="selectDao" resultType="com.jsh.myproject.dto.selectDto">
-		SELECT * FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기'
+<!-- 	SELECT * FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기'-->	
+		SELECT * FROM selectclass SC join NOW N on SC.year = N.year AND SC.semester = n.semester WHERE SC.id = #{param1}
 	</select>
 
-	<select id="sumscoreDao" resultType="int">
-		SELECT sum(score) as sum FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기'
-	</select>
+	<select id="sumscoreDao" resultType="Integer">
+		
+<!-- 	SELECT sum(score) as sum FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기' -->	
+ 		SELECT sum(SC.score) as sum FROM selectclass SC join NOW N on SC.year = N.year AND SC.semester = n.semester WHERE SC.id = #{param1}
+ 	</select>
 
 	<select id="classDao2" resultType="com.jsh.myproject.dto.classDto">
 		SELECT * FROM class WHERE code NOT IN (SELECT code FROM selectclass where id = #{param1} and year = 2022 and semester = '1학기') and  classline = #{param2} and num =#{param3} and classification = #{param4} and year = 2022 and semester = '1학기'
@@ -104,22 +107,18 @@
 	</update>
 	
 	<delete id="applicationCancleDao3">
-		DELETE FROM score where id =#{param1} AND code =#{param2} AND year = 2022 AND semester='1학기'
+	<!--DELETE FROM score where id =#{param1} AND code =#{param2} AND year = 2022 AND semester='1학기' -->
+		DELETE FROM score S WHERE EXISTS (SELECT 1 FROM NOW WHERE year = S.year AND semester = S.semester AND S.id =#{param1} AND S.code =#{param2});
 	</delete>
 	
 	
 	<select id="scoreDao" resultType="com.jsh.myproject.dto.myscoreDto">
-		SELECT DISTINCT S.year, S.semester, sum(SC.score) as appscore ,  sum(S.score) as sumscore , sum(S.grade) as sumgrade , avg (S.score) as avgscore , avg(S.grade) as avggrade  from score S right join selectclass SC on S.id = SC.id and S.year = SC.year and SC.semester = SC.semester and SC.code = S.code where SC.id = #{param1} group by S.year, S.semester order by S.year desc
+		SELECT DISTINCT year, semester, sum(appscore) as appscore ,  sum(score) as sumscore , sum(grade) as sumgrade , avg (score) as avgscore , avg(grade) as avggrade  from score where id = #{param1} group by year, semester order by year desc
 	</select>
 
 	<select id="scoreDao2" resultType="com.jsh.myproject.dto.myscoreDto">
-		SELECT sum(score) as getscore FROM selectclass where code in (select code from score where grade not in 0 ) and id = #{param1} group by year, semester order by year desc
+		SELECT sum(appscore) as getscore FROM score where grade not in 0  and id = #{param1} group by year, semester order by year desc
 	</select>
-
-	<select id="scoreDao3" resultType="com.jsh.myproject.dto.myscoreDto">
-		SELECT sum(score) as appscore FROM selectclass where code in (select code from score where grade is not null) and id = #{param1} group by year, semester order by year desc
-	</select>
-
 
 
 
@@ -169,7 +168,7 @@
 	</select>
 	
 	<insert id="setscoreOkDao">
-		INSERT INTO score ( classname , score, grade, year , semester , code , id ,professor) VALUES(#{param1} ,#{param2},#{param3},#{param4},#{param5},#{param6},#{param7},#{param8})
+		INSERT INTO score ( classname , score, grade, year , semester , code , id ,professor ,pid, appscore) VALUES(#{param1} ,#{param2},#{param3},#{param4},#{param5},#{param6},#{param7},#{param8},#{param9},#{param10})
 	</insert>
 	
 	
@@ -178,7 +177,8 @@
 	</update>
 	
 	<select id="classDao" resultType="com.jsh.myproject.dto.classDto">
-		SELECT * FROM class WHERE code = #{param1}
+	<!--SELECT * FROM class WHERE code = #{param1} AND year = 2022 AND semester = '1학기' -->
+		SELECT * FROM class C join NOW N ON C.year=N.year AND C.semester = N.semester WHERE C.code = #{param1}
 	</select>
 	
 
