@@ -14,6 +14,7 @@ import com.jsh.myproject.dao.Dao;
 import com.jsh.myproject.dto.classDto;
 import com.jsh.myproject.dto.infoDto;
 import com.jsh.myproject.dto.memberDto;
+import com.jsh.myproject.dto.nowDto;
 
 @Controller
 public class HomeController {
@@ -22,11 +23,13 @@ public class HomeController {
 	private SqlSession sqlSession;
 	
 	
+	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request) {
 		
 		Dao dao = sqlSession.getMapper(Dao.class);
 		HttpSession session = request.getSession();	
+			
 		
 		if(session.getAttribute("degree")!=null) {
 			
@@ -125,6 +128,9 @@ public class HomeController {
 			session.setAttribute("id", dto.getId());
 			session.setAttribute("name", dto.getName());
 			
+			nowDto now = dao.nowDao();
+			session.setAttribute("year", now.getYear());
+			session.setAttribute("semester", now.getSemester());	
 			
 			//세션에 아이디와 이름을 올림
 			
@@ -322,7 +328,7 @@ public class HomeController {
 		
 		if(session.getAttribute("classline")!=null) {
 			
-			model.addAttribute("application", dao.classDao2((String)session.getAttribute("id"), (String) session.getAttribute("classline"), Integer.parseInt( (String)session.getAttribute("num") ), (String)session.getAttribute("classification")));
+			model.addAttribute("application", dao.classDao2((String)session.getAttribute("id"), (String) session.getAttribute("classline"), Integer.parseInt( (String)session.getAttribute("num") ), (String)session.getAttribute("classification"),  Integer.parseInt(String.valueOf(session.getAttribute("year"))), (String)session.getAttribute("semester")));
 		}
 		
 		
@@ -422,6 +428,10 @@ public class HomeController {
 			memberDto dto = dao.loginPOkDao(request.getParameter("id"));
 			HttpSession session = request.getSession();
 
+			nowDto now = dao.nowDao();
+			session.setAttribute("year", now.getYear());
+			session.setAttribute("semester", now.getSemester());	
+			
 			session.setAttribute("id", dto.getId());
 			session.setAttribute("name", dto.getName());
 			session.setAttribute("degree", dto.getDegree());

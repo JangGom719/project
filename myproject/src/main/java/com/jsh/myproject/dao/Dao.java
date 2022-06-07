@@ -6,6 +6,7 @@ import com.jsh.myproject.dto.classDto;
 import com.jsh.myproject.dto.infoDto;
 import com.jsh.myproject.dto.memberDto;
 import com.jsh.myproject.dto.myscoreDto;
+import com.jsh.myproject.dto.nowDto;
 import com.jsh.myproject.dto.scoreDto;
 import com.jsh.myproject.dto.selectDto;
 
@@ -53,7 +54,7 @@ public interface Dao {
 	public Integer sumscoreDao(String id);
 	//신청 수강 학점
 	
-	public ArrayList<classDto> classDao2(String id, String classline, int num, String classification);
+	public ArrayList<classDto> classDao2(String id, String classline, int num, String classification, int year, String semester);
 	//신청 할 수 있는 수강 리스트
 	
 	public void applicationDao(String id, String code);
@@ -104,5 +105,9 @@ public interface Dao {
 	
 	public void updatescoreOkDao(int score, double grade , String id, String code, String professor);
 	//성적 수정
+	
+	
+	public nowDto nowDao();
+	//현재 진행중인 학기
 	
 }

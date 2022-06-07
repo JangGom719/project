@@ -75,8 +75,15 @@
  		SELECT sum(SC.score) as sum FROM selectclass SC join NOW N on SC.year = N.year AND SC.semester = n.semester WHERE SC.id = #{param1}
  	</select>
 
+	
+	<select id="nowDao" resultType="com.jsh.myproject.dto.nowDto">
+		select year, semester FROM now
+	</select>
+
+
 	<select id="classDao2" resultType="com.jsh.myproject.dto.classDto">
-		SELECT * FROM class WHERE code NOT IN (SELECT code FROM selectclass where id = #{param1} and year = 2022 and semester = '1학기') and  classline = #{param2} and num =#{param3} and classification = #{param4} and year = 2022 and semester = '1학기'
+		SELECT * FROM class WHERE code NOT IN (SELECT code FROM selectclass where id = #{param1} and year = #{param5} and semester = #{param6})
+		 and  classline = #{param2} and num =#{param3} and classification = #{param4} and year = #{param5} and semester = #{param6}
 	</select>
 
 	
