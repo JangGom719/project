@@ -5,91 +5,99 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	
-	<!-- MEMBER -->
+	<!-- 학생 -->
 	<mapper namespace="com.jsh.myproject.dao.Dao">
 	
 	
 	<insert id="joinDao">
 		INSERT INTO member (id, pw, name, birth, gender, phone, depart, degree) VALUES (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, '학생')
 	</insert>
+	<!-- 회원가입시 member에 데이터 저장 -->
 
-   <!-- info에 아이디 값을 저장  -->
+   
 	<insert id="joinDao2">
 		INSERT INTO info ( id , professor ) VALUES(#{param1} ,'장상현')
 	</insert>
-
+	<!-- 회원가입시 info에 아이디 값을 임시로 저장  -->
 	
 	<select id="loginOkDao" resultType="com.jsh.myproject.dto.memberDto">
 		SELECT * FROM member WHERE id = #{param1} AND degree ='학생'
 	</select>
+	<!-- 로그인 -->
 	
 	<select id="checkIdDao" resultType="int">
 		SELECT COUNT(*) FROM member WHERE id = #{param1}
 	</select>
+	<!-- 아이디가 맞는지 확인 -->
+	
 	
 	<select id="checkIdDao2" resultType="int">
 		SELECT COUNT(*) FROM info WHERE id = #{param1}
 	</select>
-	
+	<!-- 아이디가 맞는지 확인 -->
 	
 	<select id="checkPwDao" resultType="int">
 		SELECT COUNT(*) FROM member WHERE id = #{param1} AND pw = #{param2} AND degree ='학생'
 	</select>
+	<!-- 비밀번호가 맞는지 확인 -->
 	
 	
 	<select id="searchIdOkDao" resultType="com.jsh.myproject.dto.memberDto">
 		SELECT * FROM member WHERE name = #{param1} AND phone = #{param2} AND degree ='학생'
 	</select>
+	<!-- 이름과 전화번호로 아이디를 검색 -->
 	
 	<select id="searchPwOkDao" resultType="com.jsh.myproject.dto.memberDto">
 		SELECT * FROM member WHERE id = #{param1} AND phone = #{param2} AND degree = '학생'
 	</select>
+	<!-- 아이디와 전화번호로 비밀번호 검색 -->
 	
 	<select id="searchIdDao" resultType="int">
 		SELECT COUNT(*) FROM member WHERE name = #{param1} AND phone = #{param2} AND degree ='학생'
 	</select>
+	<!-- 아이디 검색 확인 -->
 	
 	<select id="searchPwDao" resultType="int">
 		SELECT COUNT(*) FROM member WHERE id = #{param1} AND phone = #{param2} AND degree = '학생'
 	</select>
+	<!-- 비밀번호 검색 확인 -->
 	
-	
-	<!-- INFO -->
 	<select id="infoDao" resultType="com.jsh.myproject.dto.infoDto">
 		SELECT * FROM info WHERE id = #{param1}
 	</select>
+	<!-- 아이디로 info 데이터 검색 -->
 	
 	<update id="infoOkDao">
 		UPDATE info SET china = #{param1} ,english = #{param2}, home = #{param3} , email = #{param4} , bank = #{param5} , account = #{param6} , depositor = #{param7} , nation = #{param8} WHERE id = #{param9} 
 	</update>
-	
+	<!-- info를 수정할 경우 데이터 저장 -->
 
 	<select id="selectDao" resultType="com.jsh.myproject.dto.selectDto">
 <!-- 	SELECT * FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기'-->	
 		SELECT * FROM selectclass SC join NOW N on SC.year = N.year AND SC.semester = n.semester WHERE SC.id = #{param1}
 	</select>
+	<!-- 아이디로 현재 학기에 맞는 selectclass를 검색 -->
+
 
 	<select id="sumscoreDao" resultType="Integer">
 		
 <!-- 	SELECT sum(score) as sum FROM selectclass WHERE id = #{param1} AND year = 2022 AND semester = '1학기' -->	
  		SELECT sum(SC.score) as sum FROM selectclass SC join NOW N on SC.year = N.year AND SC.semester = n.semester WHERE SC.id = #{param1}
  	</select>
+	<!-- 아이디로 현재 학기에 신청한 학점을 계산 -->
 
 	
 	<select id="nowDao" resultType="com.jsh.myproject.dto.nowDto">
 		select year, semester FROM now
 	</select>
-
+	<!-- 현재 학기에 맞는 연도 , 학기 검색 -->
 
 	<select id="classDao2" resultType="com.jsh.myproject.dto.classDto">
 		SELECT * FROM class WHERE code NOT IN (SELECT code FROM selectclass where id = #{param1} and year = #{param5} and semester = #{param6})
 		 and  classline = #{param2} and num =#{param3} and classification = #{param4} and year = #{param5} and semester = #{param6}
 	</select>
-
+	<!-- 자신이 신청하지 않은 강좌만 검색 -->
 	
-
-
-
 
 
 	<select id="applicationDao">
@@ -97,97 +105,117 @@
 		SELECT #{param1} , class.num, class.classline, class.code, class.classname, class.score, class.professor, class.pid, class.year, class.semester, class.classification
 		FROM CLASS
 		where CLASS.code = #{param2}
-	
 	</select>
+	<!-- 수강신청 데이터 삽입 -->
 	
 	<update id="applicationDao2">
 		UPDATE class SET appnum = appnum+1 WHERE code = #{param1}
 	</update>
+	<!-- 수강신청을 할 때 해당 강좌의 appnum을 증가 -->
 
 
 	<delete id="applicationCancleDao">
 		DELETE FROM selectclass where id =#{param1} AND code =#{param2}
 	</delete>
+	<!-- 수강취소를 할 때 selectclass에서 해당 데이터 삭제 -->
 
 	<update id="applicationCancleDao2">
 		UPDATE class SET appnum = appnum-1 WHERE code =#{param1}
 	</update>
+	<!-- 수강취소를 할때 해당 강좌의 appnum을 감소 -->
 	
 	<delete id="applicationCancleDao3">
 	<!--DELETE FROM score where id =#{param1} AND code =#{param2} AND year = 2022 AND semester='1학기' -->
 		DELETE FROM score S WHERE EXISTS (SELECT 1 FROM NOW WHERE year = S.year AND semester = S.semester AND S.id =#{param1} AND S.code =#{param2})
 	</delete>
-	
+	<!-- 수강취소를 할때 해당 강좌로 받은 점수를 삭제 -->
 	
 	<select id="scoreDao" resultType="com.jsh.myproject.dto.myscoreDto">
 		SELECT DISTINCT year, semester, sum(appscore) as appscore ,  sum(score) as sumscore , sum(grade) as sumgrade , avg (score) as avgscore , avg(grade) as avggrade  from score where id = #{param1} group by year, semester order by year desc
 	</select>
+	<!-- 받은 점수를 검색 -->
 
 	<select id="scoreDao2" resultType="com.jsh.myproject.dto.myscoreDto">
 		SELECT sum(appscore) as getscore FROM score where grade not in 0  and id = #{param1} group by year, semester order by year desc
 	</select>
+	<!-- 0학점이 아닌 점수를 검색 -->
 
 
 
 	<select id="scoreinfoDao" resultType="com.jsh.myproject.dto.scoreDto">
 		SELECT * FROM score WHERE id =#{param1} AND year =#{param2} AND semester=#{param3}
 	</select>
+	<!-- 해당 강좌의 점수를 검색 -->
 
 
-<!-- 교수  -->
 
 
+
+
+
+
+
+	<!-- 교수  -->
 
 	<select id="loginPOkDao" resultType="com.jsh.myproject.dto.memberDto">
 		SELECT * FROM member WHERE id = #{param1} AND degree ='교수'
 	</select>
+	<!-- 교수 로그인 -->
 	
 	<select id="checkPIdDao" resultType="int">
 		SELECT COUNT(*) FROM member WHERE id = #{param1} AND degree ='교수'
 	</select>
+	<!-- 교수 아이디 확인 -->
 	
 	<select id="checkPPwDao" resultType="int">
 		SELECT COUNT(*) FROM member WHERE id = #{param1} AND pw = #{param2} AND degree ='교수'
 	</select>
-	
+	<!-- 교수 비밀번호 확인 -->
 
 
 	<select id="lessonDao" resultType="com.jsh.myproject.dto.classDto">
 		SELECT * FROM class WHERE pid = #{param1}
 	</select>
+	<!-- 자신의 강좌를 검색 -->
 
-	
+
 	<select id="selectclassDao" resultType="com.jsh.myproject.dto.infoDto">
 		select * from info where id in (select id from selectclass where code = #{param1})
 	</select>
+	<!-- 자신의 수업을 듣는 학생의 info를 검색 -->
 	
 	<select id="selectclassDao2" resultType="com.jsh.myproject.dto.memberDto">
 		select * from member where id in (select id from selectclass where code = #{param1})
 	</select>
+	<!-- 자신의 수업을 듣는 학생의 member를 검색 (두 테이블에서 얻는 정보가 다름) -->
 	
 	
 	<select id="checkscoreDao" resultType="int">
 		SELECT COUNT(*) FROM score WHERE id = #{param1} AND code =#{param2}
 	</select>
+	<!-- 성적을 부여 했는지 확인 -->
 	
 	<select id="getscoreDao" resultType="com.jsh.myproject.dto.scoreDto">
 		SELECT * FROM score WHERE id = #{param1} AND code =#{param2}
 	</select>
+	<!-- 부여한 성적을 가져옴 -->
 	
 	<insert id="setscoreOkDao">
 		INSERT INTO score ( classname , score, grade, year , semester , code , id ,professor ,pid, appscore) VALUES(#{param1} ,#{param2},#{param3},#{param4},#{param5},#{param6},#{param7},#{param8},#{param9},#{param10})
 	</insert>
+	<!-- 성적을 새롭게 부여 -->
 	
 	
 	<update id="updatescoreOkDao">
 		UPDATE score SET score = #{param1}, grade = #{param2} , professor=#{param5} WHERE id=#{param3} AND code=#{param4}
 	</update>
+	<!-- 성적을 수정 -->
 	
 	<select id="classDao" resultType="com.jsh.myproject.dto.classDto">
 	<!--SELECT * FROM class WHERE code = #{param1} AND year = 2022 AND semester = '1학기' -->
 		SELECT * FROM class C join NOW N ON C.year=N.year AND C.semester = N.semester WHERE C.code = #{param1}
 	</select>
-	
+	<!-- 해당 수업의 정보를 검색 -->
 
 
 </mapper>
