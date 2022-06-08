@@ -315,6 +315,20 @@ a.join{
 	color:#000000;
 }
 
+a.link {
+	
+	text-decoration : none;
+	color:#000000;
+}
+
+
+a.link:hover {
+	
+	text-decoration : underline;
+	
+}
+
+
 ul {
   list-style-type: none;
   padding: 0;

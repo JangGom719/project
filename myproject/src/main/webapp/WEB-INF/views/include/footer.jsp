@@ -11,16 +11,13 @@
 <body>
 	<table class="t-type02-footer" width="100%" border="0" cellspacing="0" cellpadding="0">
 		
-<!-- 		<tr>
-			<td height="100" bgcolor="#FFFFFF">&nbsp;</td>
-		</tr>
- -->		
 		<tr>
-			<td height="25" align="center">Copyright ⓒ SangHyun. All Rights Reserved</td>
-		</tr>
-		<tr>
-			<td height="25" align="center">This homepage is built with Spring Framework. Made by SangHyun Jang. E-Mail: wkdtkdgussla@naver.com </td>
+			<td height="25" align="center">이 홈페이지는 스프링 부트를 이용하여 제작한 수강신청 사이트 입니다.</td>     
 		</tr>		
+		<tr>
+			<td height="25" align="center">연락처 : 010-5234-1378 이메일: wkdtkdgussla@naver.com 소스 : <a class="link" href="https://github.com/JangGom719/project/">https://github.com/JangGom719/project/</a></td>
+		</tr>
+		
 	</table>
 </body>
 </html>

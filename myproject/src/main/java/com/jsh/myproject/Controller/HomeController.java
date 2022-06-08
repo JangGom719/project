@@ -23,6 +23,28 @@ public class HomeController {
 	private SqlSession sqlSession;
 	
 	
+	@RequestMapping(value="/")
+	public String main(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();	
+			
+		
+		if(session.getAttribute("degree")!=null) {
+			
+			return "Phome";
+			//교수로 로그인 할 경우
+			
+		} else if(session.getAttribute("id")!=null) {
+			
+			return "home";
+			//학생으로 로그인 할 경우
+		}
+		
+		else 	
+			return "index";
+	}
+	
+	
 	
 	@RequestMapping(value = "/index")
 	public String index(HttpServletRequest request) {
