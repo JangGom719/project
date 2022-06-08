@@ -136,7 +136,7 @@
 							<c:forEach items="${application}" var="dto">
 							<tr align="center" class="colored">
 							
-								<td class="td-type04"><input type="button" value="신청" onclick="if((${dto.score }+${sum })>21) alert('학점은 21학점을 넘을 수 없습니다'); else javascript:window.location='applicationOk?code=${dto.code }'"></td>
+								<td class="td-type04"><input type="button" value="신청" onclick="if((${dto.score }+${sum })>21) alert('학점은 21학점을 넘을 수 없습니다'); else if(${dto.appnum } == ${dto.maxnum }) alert('수강인원을 초과하였습니다'); else javascript:window.location='applicationOk?code=${dto.code }'"></td>
 					
 								<td class="td-type04">${dto.num} </td>
 								<td class="td-type04">${dto.classline }</td>

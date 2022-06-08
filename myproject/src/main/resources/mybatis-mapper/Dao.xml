@@ -115,7 +115,7 @@
 	
 	<delete id="applicationCancleDao3">
 	<!--DELETE FROM score where id =#{param1} AND code =#{param2} AND year = 2022 AND semester='1학기' -->
-		DELETE FROM score S WHERE EXISTS (SELECT 1 FROM NOW WHERE year = S.year AND semester = S.semester AND S.id =#{param1} AND S.code =#{param2});
+		DELETE FROM score S WHERE EXISTS (SELECT 1 FROM NOW WHERE year = S.year AND semester = S.semester AND S.id =#{param1} AND S.code =#{param2})
 	</delete>
 	
 	

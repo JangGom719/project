@@ -41,26 +41,28 @@ function infoConfirm() {
 	}
 	
 	
-	if(document.reg_frm.birth.value.length == 0) {
-		alert("생일은 필수사항입니다.");
+	if(document.reg_frm.birth.value.length != 8) {
+		alert("생년월일은 YYYYDDMM 형식으로 입력해주세요");
 		reg_frm.birth.focus();
 		return;
 	}
 	
-	if(document.reg_frm.gender.value.length == 0) {
+	
+	if(document.reg_frm.gender.value == "성별") {
 		alert("성별은 필수사항입니다.");
 		reg_frm.gender.focus();
 		return;
 	}
 
-	if(document.reg_frm.phone.value.length == 0) {
-		alert("전화번호 필수사항입니다.");
+	if(document.reg_frm.phone.value.length != 11) {
+		alert("전화번호를 정확히 입력해주세요");
 		reg_frm.phone.focus();
 		return;
 	}	
 
-	if(document.reg_frm.depart.value.length == 0) {
-		alert("전공은 필수사항입니다.");
+
+	if(document.reg_frm.depart.value == "학과") {
+		alert("학과 필수사항입니다.");
 		reg_frm.depart.focus();
 		return;
 	}
