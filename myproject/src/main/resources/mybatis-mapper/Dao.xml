@@ -150,11 +150,6 @@
 
 
 
-
-
-
-
-
 	<!-- 교수  -->
 
 	<select id="loginPOkDao" resultType="com.jsh.myproject.dto.memberDto">
@@ -218,4 +213,5 @@
 	<!-- 해당 수업의 정보를 검색 -->
 
 
+	
 </mapper>

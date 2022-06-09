@@ -75,7 +75,7 @@ table.opacity2 {
 table.index {
 	
 	width:70%;
-	background-image:url('/resources/img/school.png');
+	background: url("${pageContext.request.contextPath}/../../../resources/img/school.png"); 
 	background-repeat: no-repeat;
  	background-position: center center;
   	background-size: cover;
@@ -84,7 +84,8 @@ table.index {
 
 table.bg { 
   width:70%;
-  background-image:url('/resources/img/school2.jpg');
+  	background: url("${pageContext.request.contextPath}/../../../resources/img/school2.jpg"); 
+
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -94,7 +95,8 @@ table.bg {
 table.notice01 {
 	
 	width:35%;
-	background-image:url('/resources/img/notice01.png');
+	/* background-image:url('/resources/img/notice01.png'); */
+	background: url("${pageContext.request.contextPath}/../../../resources/img/notice01.png"); 
 	background-repeat: no-repeat;
  	background-position: center center;
   	background-size: cover;
@@ -105,7 +107,8 @@ table.notice01 {
 table.notice02 {
 	
 	width:35%;
-	background-image:url('/resources/img/notice02.png');
+	/* background-image:url('/resources/img/notice02.png'); */
+	background: url("${pageContext.request.contextPath}/../../../resources/img/notice02.png"); 
 	background-repeat: no-repeat;
  	background-position: center center;
   	background-size: cover;
@@ -333,7 +336,6 @@ ul {
   list-style-type: none;
   padding: 0;
   margin-top:20px;
- 
   width: 130px;
   background: #FF6347;
   height: 100%;

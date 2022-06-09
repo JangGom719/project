@@ -12,7 +12,7 @@
 	<table class="t-type02-header" width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr height="80">
 			
-			<td align="left"><a href="/index"><img src="<c:url value="/resources/img/logo_big.png" />"></a></td>
+			<td align="left"><a href="main"><img src="<c:url value="/resources/img/logo_big.png" />"></a></td>
 			
 			
 				<% String sessionId = (String) session.getAttribute("id");

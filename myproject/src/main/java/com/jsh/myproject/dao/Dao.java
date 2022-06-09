@@ -9,6 +9,7 @@ import com.jsh.myproject.dto.myscoreDto;
 import com.jsh.myproject.dto.nowDto;
 import com.jsh.myproject.dto.scoreDto;
 import com.jsh.myproject.dto.selectDto;
+import com.jsh.myproject.dto.testDto;
 
 public interface Dao {
 
@@ -109,5 +110,7 @@ public interface Dao {
 	
 	public nowDto nowDao();
 	//현재 진행중인 학기
+	
+	
 	
 }

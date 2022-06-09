@@ -27,7 +27,9 @@ public class HomeController {
 	public String main(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();	
-			
+		
+		Dao dao = sqlSession.getMapper(Dao.class);
+	
 		
 		if(session.getAttribute("degree")!=null) {
 			
@@ -41,17 +43,17 @@ public class HomeController {
 		}
 		
 		else 	
-			return "index";
+			return "main";
 	}
 	
 	
 	
-	@RequestMapping(value = "/index")
+	@RequestMapping(value = "/main")
 	public String index(HttpServletRequest request) {
 		
 		Dao dao = sqlSession.getMapper(Dao.class);
 		HttpSession session = request.getSession();	
-			
+
 		
 		if(session.getAttribute("degree")!=null) {
 			
@@ -65,7 +67,7 @@ public class HomeController {
 		}
 		
 		else 	
-			return "index";
+			return "main";
 			//그 외
 		
 	}
@@ -149,10 +151,7 @@ public class HomeController {
 
 			session.setAttribute("id", dto.getId());
 			session.setAttribute("name", dto.getName());
-			
-			nowDto now = dao.nowDao();
-			session.setAttribute("year", now.getYear());
-			session.setAttribute("semester", now.getSemester());	
+				
 			
 			//세션에 아이디와 이름을 올림
 			
@@ -347,6 +346,9 @@ public class HomeController {
 		
 		HttpSession session = request.getSession();		
 		
+		nowDto now = dao.nowDao();
+		session.setAttribute("year", now.getYear());
+		session.setAttribute("semester", now.getSemester());
 		
 		if(session.getAttribute("classline")!=null) {
 			
@@ -453,6 +455,7 @@ public class HomeController {
 			nowDto now = dao.nowDao();
 			session.setAttribute("year", now.getYear());
 			session.setAttribute("semester", now.getSemester());	
+
 			
 			session.setAttribute("id", dto.getId());
 			session.setAttribute("name", dto.getName());
@@ -607,9 +610,6 @@ public class HomeController {
 		
 		return "updatescoreOk";
 	}
-	
-	
-	
 	
 	
 }

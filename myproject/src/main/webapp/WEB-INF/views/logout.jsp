@@ -4,7 +4,7 @@
 <%  
 
 	session.invalidate();
-	response.sendRedirect("index");
+	response.sendRedirect("main");
 
 %>
     
